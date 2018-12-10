@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Cache</title>
+</head>
+<body>
+  <h3>我是index1</h3>
+  <p>
+    <a href="/">回首页</a>
+  </p>
+  <p>
+    <a id="link1">点击跳转到自身</a>
+  </p>
+  <p>
+    <a id="link2">A标签跳转到index2页面</a>
+  </p>
+  <p>
+    <button id="open-new">window.open打开新index1窗口</button>
+  </p>
+  <img id="image" alt="img" width="200" height="200"/>
+  <script>
+    document.getElementById('open-new').onclick = function() {
+      window.open(`http://localhost:8288${window.location.pathname}?page=index1`, '', 'width=200,height=100')
+    }
+    window.onload = () => {
+      document.getElementById('image').src=`./img/avatar.jpg?api=${window.location.pathname}`
+      document.getElementById('link1').href=`${window.location.pathname}?page=index1`
+      document.getElementById('link2').href=`.${window.location.pathname}?page=index2`
+    }
+  </script>
+  <!-- <img src="./avatar2.jpg" alt="img" width="200" height="200"/> -->
+</body>
+</html>

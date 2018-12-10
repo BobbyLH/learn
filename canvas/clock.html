@@ -1,0 +1,134 @@
+<!doctype html>
+	<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>时钟</title>
+		<style type="text/css">
+			#clock{
+				border: 1px solid red;
+				margin:  50px 0 0 50px;
+			}
+		</style>
+	</head>
+	<body>
+		<canvas id="clock" width="800px" height="800px">
+			你的浏览器太老了
+		</canvas>
+	</body>
+	<script type="text/javascript">
+		var oContext = document.getElementById('clock').getContext('2d');
+		var deg = Math.PI/180;
+
+		function static (){
+			// 表盘
+			oContext.beginPath();
+			oContext.save();
+			oContext.fillStyle = 'gray';
+			oContext.arc(400 , 400 , 400 , 0 , deg * 360)
+			oContext.fill();
+			// 刻度
+			
+			oContext.translate(400 , 400);
+			for (var i = 0; i < 12; i++) {
+				oContext.beginPath();
+				oContext.moveTo(0 , -345);
+				oContext.lineTo(0 , -395);
+				oContext.strokeStyle = 'white';
+				oContext.lineWidth = 10;
+				oContext.lineCap = 'round';
+				oContext.stroke();
+				oContext.rotate(deg * 30);
+
+			};
+			oContext.restore();
+			oContext.save();
+			oContext.translate(400 , 400);
+			// for (var i = 0; i < 12; i++) {
+			// 	for (var j = 0; j < 4; j++) {
+			// 		oContext.beginPath();
+			// 		oContext.rotate(deg * 6);
+			// 		oContext.moveTo(0 , -370);
+			// 		oContext.lineTo(0 , -390);
+			// 		oContext.strokeStyle = 'pink';
+			// 		oContext.lineWidth = 3;
+			// 		oContext.lineCap = 'round';
+			// 		oContext.stroke();
+					
+			// 	};
+			// 	oContext.rotate(deg * 6);
+			// };
+			for (var i = 0; i < 60; i++) {
+				
+				if (i%5 != 0) {
+					oContext.beginPath();
+					oContext.moveTo(0 , -370);
+					oContext.lineTo(0 , -390);
+					oContext.strokeStyle = 'pink';
+					oContext.lineWidth = 3;
+					oContext.lineCap = 'round';
+					oContext.stroke();
+				};
+				oContext.rotate( 6 * deg);
+			}
+		};
+		static();
+
+
+
+
+
+		// 指针
+
+		function clock(){
+			var oDate = new Date();
+			var sec = oDate.getSeconds();
+			var min = oDate.getMinutes();
+			var hour = oDate.getHours();
+			oContext.clearRect(0 , 0 , 800 , 800);
+			oContext.restore();
+			oContext.save();
+			static();
+			oContext.restore();
+			oContext.save();
+			oContext.translate(400 , 400);
+			oContext.rotate(sec * 6 * deg);
+			oContext.beginPath();
+			oContext.moveTo(0 , 0)
+			oContext.lineTo(0 , -300);
+			oContext.strokeStyle = 'orange';
+			oContext.lineWidth = 2;
+			oContext.lineCap = 'round';
+			oContext.stroke();
+
+			oContext.restore();
+			oContext.save();
+			oContext.translate(400 , 400);
+			oContext.rotate(min * 6 * deg + sec / 10 * deg);
+			oContext.beginPath();
+			oContext.moveTo(0 , 0)
+			oContext.lineTo(0 , -250);
+			oContext.strokeStyle = 'gold';
+			oContext.lineWidth = 5;
+			oContext.lineCap = 'round';
+			oContext.stroke();
+
+			oContext.restore();
+			oContext.save();
+			oContext.translate(400 , 400);
+			oContext.rotate(hour * 30 * deg + min / 2 * deg + sec / 120 * deg);
+			oContext.beginPath();
+			oContext.moveTo(0 , 0)
+			oContext.lineTo(0 , -200);
+			oContext.strokeStyle = 'blue';
+			oContext.lineWidth = 8;
+			oContext.lineCap = 'round';
+			oContext.stroke();
+
+			window.requestAnimationFrame(clock)
+		};
+		clock();
+		
+		
+		
+	</script>
+</html>

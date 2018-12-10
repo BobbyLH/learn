@@ -1,0 +1,67 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>刮刮乐</title>
+		<style type="text/css">
+			body{
+				position: relative;
+			}
+			#myCanvas{
+				/*background: lightgray;*/
+				position: absolute;
+				border: 1px solid red;
+			}
+			img{
+				width: 600px;
+				height: 800px;
+				position: absolute;
+			}
+		</style>
+	</head>
+	<body>
+		<img src="girl.jpeg" alt="美女" />
+		<canvas id="myCanvas" width="600" height="800"></canvas>
+	</body>
+	<script type="text/javascript">
+		var oCanvas = document.getElementById('myCanvas');
+		var oContext = oCanvas.getContext('2d');
+		oContext.beginPath();
+		oContext.fillStyle = 'lightgray';
+		oContext.fillRect(0 , 0 , 600 , 800);
+		oContext.globalCompositeOperation = 'destination-out';
+		oCanvas.onmousedown = function(){
+			
+			
+			oCanvas.onmousemove = function(e){
+				var ev = e || window.event;
+				var x = ev.clientX - oCanvas.offsetLeft;
+				var y = ev.clientY - oCanvas.offsetTop;
+				oContext.beginPath();
+				oContext.fillStyle = 'red';
+				oContext.arc(x , y , 20 , 0 , Math.PI * 2);
+				oContext.fill();
+			};
+
+		};
+		oCanvas.onmouseup = function(){
+			oCanvas.onmousemove = '';
+		}; 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	</script>
+</html>

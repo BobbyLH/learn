@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Cache</title>
+  </head>
+  <body>
+    <h3>我是index2</h3>
+    <p>
+      <a id="link">A标签跳转到index1页面</a>
+    </p>
+    <img id="image" alt="img" width="200" height="200"/>
+  </body>
+  <script>
+    window.onload = () => {
+      document.getElementById('image').src=`./img/avatar2.jpg?api=${window.location.pathname}`
+      document.getElementById('link').href=`${window.location.pathname}?page=index1`
+    }
+  </script>
+</html>

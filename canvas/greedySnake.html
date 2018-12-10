@@ -1,0 +1,199 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>贪吃蛇</title>
+		<style type="text/css">
+			#myCanvas{
+				border: 1px solid red;
+				margin: 100px 0 0 100px;
+				/*background: lightgray;*/
+			}
+		</style>
+	</head>
+	<body>
+		<canvas id="myCanvas" width="1000" height="600"></canvas>
+	</body>
+	<script type="text/javascript">
+		var oCanvas = document.getElementById('myCanvas');
+		var oContext = oCanvas.getContext('2d');
+		var game = null;
+		var bodys = [];
+		var count = 0;
+		function Head(x , y , speedX , speedY){
+			this.x = x;
+			this.y = y;
+			this.speedX = speedX;
+			this.speedY = speedY;
+		};
+		Head.prototype.draw = function(){
+			oContext.beginPath();
+			oContext.fillStyle = 'red';
+			oContext.strokeStyle = 'pink';
+			oContext.strokeRect(this.x , this.y , 20 , 20);
+			oContext.fillRect(this.x , this.y , 20 , 20);
+		};
+		Head.prototype.move = function(){
+			this.x += this.speedX;
+			this.y += this.speedY;
+			if (this.x <= 0 || this.x >= oCanvas.width - 20) {
+				
+				window.cancelAnimationFrame(game);
+				// snakeHead.draw();
+			};
+			if (this.y <= 0 || this.y >= oCanvas.height - 20) {
+				
+				window.cancelAnimationFrame(game);
+				// snakeHead.draw();
+			};
+			for (var i = 0; i < bodys.length; i++) {
+				if(this.x + 20 > bodys[i].x && this.x < bodys[i].x + 20 && this.y + 20 > bodys[i].y && this.y < bodys[i].y + 20){
+					window.cancelAnimationFrame(game);
+					break;
+				};
+			};
+		};
+		
+
+		
+
+
+
+
+
+		function Body (x , y , color , speedX , speedY){
+			this.x = x;
+			this.y = y;
+			this.speedX = speedX;
+			this.speedY = speedY;
+			this.color = color;
+		};
+
+		Body.prototype.draw = function(){
+			oContext.beginPath();
+			oContext.fillStyle = this.color;
+			oContext.strokeStyle = 'pink';
+			oContext.strokeRect(this.x , this.y , 20 , 20);
+			oContext.fillRect(this.x , this.y , 20 , 20);
+		};
+		Body.prototype.move = function(){
+			this.x = snakeHead.x - 20;
+			this.y = snakeHead.y ;
+		};
+		// Body.prototype.everyoneMove = function(){
+		// 	this.x += this.speedX;
+		// 	this.y += this.speedY;
+		// };
+		function fnRan (min , max){
+			return Math.round(Math.random() * (max - min) + min);
+		};
+		function Food (x , y , color ){
+			this.x = x;
+			this.y = y;
+			this.color = color;
+		};
+		Food.prototype.draw = function(){
+			oContext.beginPath();
+			oContext.fillStyle = this.color;
+			oContext.fillRect(this.x , this.y , 20 , 20);
+		};
+
+		var snakeHead = new Head(100 , 20 , 20 , 0);	
+		for (var i = 0; i < 4; i++) {
+			bodys.push(new Body(80 - i * 20 , 20 , 'gold' , 2 , 0))
+		};	
+		var food = new Food (300 , 20 , 'red');
+		function play (){
+			count++;
+			game = window.requestAnimationFrame(play);
+			if (count%10 == 0) {
+				oCanvas.width = oCanvas.width;
+				// snakeHead.draw();			
+				snakeHead.move();
+				snakeHead.draw();					
+				bodys[bodys.length - 1].move();
+				for (var i = 0; i < bodys.length; i++) {
+					bodys[i].draw();					
+				};
+				bodys.unshift(bodys.pop());
+				
+				
+				
+				food.draw();
+				if (snakeHead.x + 20 > food.x && snakeHead.x < food.x + 20 && snakeHead.y + 20 > food.y && snakeHead.y < food.y + 20) {						
+					food = null;
+					var foodC = `rgb(${fnRan(0 , 225)},${fnRan(0 , 225)},${fnRan(0 , 225)})`;
+					bodys.push(new Body(bodys[length].x - 10 , 20 , 'gold'));
+					for (var i = 0; i < 1; i++) {
+						var foodX = fnRan(0 , oCanvas.width - 20);
+						var foodY = fnRan(0 , oCanvas.height - 20);
+						for (var j = 0; j < bodys.length; j++) {
+							if (bodys[j].x == foodX) {
+								i--;
+								break;
+							};
+							if (bodys[j].y == foodY) {
+								i--;
+								break;
+							};
+						};
+					};
+					
+					food = new Food(foodX , foodY , foodC);
+				};
+			};
+			
+			
+			
+				
+			
+		};
+		play();
+		var direction = 'right';
+		document.onkeydown = function(e){
+			var ev = e || window.event;		
+			console.log(direction);
+			if (ev.keyCode == 37 && direction != 'right') {
+				direction = 'left';
+				snakeHead.speedY = 0;
+				snakeHead.speedX = -20;
+				Body.prototype.move = function(){
+					this.x = snakeHead.x + 20;
+					this.y = snakeHead.y ;
+				};
+			}else if (ev.keyCode == 38 && direction != 'down') {
+				direction = 'up';
+				snakeHead.speedX = 0;
+				snakeHead.speedY = -20;
+				Body.prototype.move = function(){
+					this.x = snakeHead.x ;
+					this.y = snakeHead.y + 20;
+				};
+			}else if (ev.keyCode == 39 && direction != 'left') {
+				direction = 'right';
+				snakeHead.speedY = 0;
+				snakeHead.speedX = 20;
+				Body.prototype.move = function(){
+					this.x = snakeHead.x - 20;
+					this.y = snakeHead.y ;
+				};
+			}else if (ev.keyCode == 40 && direction != 'up') {
+				direction = 'down';
+				snakeHead.speedX = 0;
+				snakeHead.speedY = 20;
+				Body.prototype.move = function(){
+					this.x = snakeHead.x ;
+					this.y = snakeHead.y - 20;
+				};
+			};
+		};
+
+
+		
+		
+		
+		
+
+
+	</script>
+</html>

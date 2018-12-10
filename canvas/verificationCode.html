@@ -1,0 +1,80 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>验证码</title>
+		<style type="text/css">
+			#verify{
+				background: #F5F5F5;
+				margin: 50px 0 0 50px;
+			}
+		</style>
+	</head>
+	<body>
+		<canvas id="verify" width="200" height="50"></canvas>
+	</body>
+	<script type="text/javascript">
+		var oCanvas = document.getElementById('verify');
+		var oVerify = oCanvas.getContext('2d');
+		var aText = [0,1,2,3,4,5,6,7,8,9]
+		for(var i = 0;i < 26;i++){
+		    aText.push((String.fromCharCode(65 + i)));
+		    aText.push((String.fromCharCode(97 + i)));
+		};
+		var aColor = ['lavender','black','blue','green','goldenrod','gold','orange','red','pink','gray','lightgray','darkgray','lightblue','darkblue','violet','purple','brown'];
+		var aFontStyle = ['normal','italic','oblique'];
+		var aFontWeight = ['bold','bolder','lighter','normal','100','200','300','400','500','600','700','800','900'];
+		console.log(parseInt(Math.random()*4));
+		function randomFn (){
+			// 随机字母数字、随机颜色、随机大小、随机位置、随机字体、随机粗细
+
+			for (var i = 0; i < 4; i++) {
+				var nRanText = parseInt(Math.random() * (aText.length - 1));
+				var nRanColor = parseInt(Math.random() * (aColor.length - 1));
+				var nRanSize = parseInt(Math.random() * 26 + 14);
+				var nRanStyle = parseInt(Math.random() * 3);
+				var nRanWeight = parseInt(Math.random() * (aFontWeight.length - 1));
+				var nRanX = parseInt(Math.random() * 30);
+				var nRanY = parseInt(Math.random() * 20);
+				oVerify.beginPath();
+				oVerify.globalAlpha = 1;
+				oVerify.font = `${aFontStyle[nRanStyle]} ${aFontWeight[nRanWeight]} ${nRanSize}px serif`;
+
+				oVerify.fillStyle = aColor[nRanColor];
+				oVerify.fillText(aText[nRanText] , i * 50 + nRanX , 25 + nRanY)
+			};
+			for (var i = 0; i < 10; i++) {
+				// 随机干扰项的颜色、线条长度、半径、起始位置、结束位置 、粗细
+				var nRanColor = parseInt(Math.random() * (aColor.length - 1));
+				var nRanInitX = parseInt(Math.random() * 200);
+				var nRanInitY = parseInt(Math.random() * 50);
+				var nRanEndX = parseInt(Math.random() * 200);
+				var nRanEndY = parseInt(Math.random() * 50);
+				var nRanWeight = parseInt(Math.random() * 4 + 2);		
+				oVerify.beginPath();
+				oVerify.globalAlpha = 0.1;
+				oVerify.moveTo(nRanInitX , nRanInitY);
+				oVerify.lineTo(nRanEndX , nRanEndY);
+				oVerify.lineWidth = nRanWeight;
+				oVerify.strokeStyle = aColor[nRanColor];
+				oVerify.stroke();
+			};
+			for (var i = 0; i < 5; i++) {
+				var nRanColor = parseInt(Math.random() * (aColor.length - 1));
+				var nRanInitX = parseInt(Math.random() * 190 + 5);
+				var nRanInitY = parseInt(Math.random() * 45 + 5);
+				var nRanRadius = parseInt(Math.random() * 10 + 5);
+				oVerify.beginPath();
+				oVerify.globalAlpha = 0.1;
+				oVerify.arc(nRanInitX , nRanInitY , nRanRadius , 0 , Math.PI * 2);
+				oVerify.strokeStyle = aColor[nRanColor];
+				oVerify.stroke();
+			};
+		};
+		oCanvas.onclick = function(){
+			oVerify.clearRect(0 , 0 , 200 , 50);
+			randomFn ();
+		};
+		randomFn ();
+	</script>
+</html>
