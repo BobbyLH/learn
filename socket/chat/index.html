@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
+    <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+    <title>Chat</title>
+    <style type="text/css">
+      .user{
+        cursor: pointer;
+        display: inline-block;
+      };
+      .user:link{}
+      .user:visited{}
+      .user:hover{
+        text-decoration: underline;
+      }
+      .btn-wrapper{
+        display: inline-block;
+      }
+      .leave{
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div>
+      <div class="btn-wrapper">
+        <button id='join-bobby' class="mdl-button mdl-js-button mdl-button--primary" onclick="join('bobby');leave('tom')" >
+          Enter the Bobby Group Chat
+        </button>
+        <button id='leave-bobby' class="mdl-button mdl-js-button mdl-button--primary leave" onclick="leave('bobby')">
+          Leave the Bobby Group Chat
+        </button>
+      </div>
+      <div class="btn-wrapper">
+        <button id='join-tom' class="mdl-button mdl-js-button mdl-button--accent" onclick="join('tom');leave('bobby')">
+          Enter the Tom Group Chat
+        </button>
+        <button id='leave-tom' class="mdl-button mdl-js-button mdl-button--accent leave" onclick="leave('tom')">
+            Leave the Tom Group Chat
+        </button>
+      </div>
+    </div>
+    <ul id='list' class='mdl-list'></ul>
+    <div class="mdl-textfield mdl-js-textfield">
+      <textarea id='msg' class="mdl-textfield__input" type="text" rows= "6" ></textarea>
+      <button id='sendBtn' class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">
+        Send
+      </button>
+    </div>
+  </body>
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="./index.js"></script>
+</html>
