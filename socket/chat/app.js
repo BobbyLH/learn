@@ -2,20 +2,27 @@ const Koa = require('koa')
 const koaStatic = require('koa-static')
 const app = new Koa()
 
+// static source handle
 app.use(koaStatic(
   __dirname
 ))
 
-const socketObj = {}
-const userColor = ['#00a1f4', '#0cc', '#f44336', '#795548', '#e91e63', '#00bcd4', '#009688', '#4caf50', '#8bc34a', '#ffc107', '#607d8b', '#ff9800', '#ff5722']
 const server = require('http').createServer(app.callback())
 const io = require('socket.io')(server)
-const mySocket = {}
+
+// according to username preserve every socket
+const userSocket = {}
+// preserve each socket by socket id
+const socketSet = {}
+// user color set
+const userColor = ['#00a1f4', '#0cc', '#f44336', '#795548', '#e91e63', '#00bcd4', '#009688', '#4caf50', '#8bc34a', '#ffc107', '#607d8b', '#ff9800', '#ff5722']
+// preserve message history
 const msgHistory = []
 
 io.on('connection', socket => {
   console.log('[Server connection]: success')
-  mySocket[socket.id] = socket
+  socketSet[socket.id] = socket
+  // preserve user joined room
   const rooms = []
   let username
   let color
@@ -28,26 +35,29 @@ io.on('connection', socket => {
     if (!username) {
       username = msg
       color = shuffle(userColor)[0]
-      content = `[SYSTEM]: Welcome ${username} join us`
+      content = `Welcome ${username} join us -- SYSTEM`
     }
 
-    if (!socketObj[username]) {
-      // preserve socket
-      socketObj[username] = socket
+    if (!userSocket[username]) {
+      // preserve user socket
+      userSocket[username] = socket
     }
 
     if (privateMsg) {
-      let toUser = privateMsg[1]
-      let content = privateMsg[2]
-      let toSocket = socketObj[toUser] || socket
-      toSocket.send({
+      const toUser = privateMsg[1]
+      const content = privateMsg[2]
+      const toSocket = userSocket[toUser]
+      const params = {
         user: username,
         color,
         content: `[private]: ${content}`,
         createAt: new Date().toLocaleString()
-      })
+      }
+      socket.send(params)
+      toSocket.send(params)
     } else {
       if (rooms.length) {
+        // preserve socket ids which in the rooms
         const socketJSON = {}
         rooms.forEach(room => {
           const roomSockets = io.sockets.adapter.rooms[room].sockets
@@ -56,7 +66,7 @@ io.on('connection', socket => {
           })
         })
         Object.keys(socketJSON).forEach(socketId => {
-          mySocket[socketId].emit('message', {
+          socketSet[socketId].emit('message', {
             user: username,
             color,
             content: `[room]: ${content}`,
