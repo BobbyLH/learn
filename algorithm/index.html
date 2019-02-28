@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Sort Algorithm</title>
+  </head>
+  <body>
+    <button onclick='insert()'>插入</button>
+    <button onclick='choice()'>选择</button>
+    <button onclick='choice2()'>选择2</button>
+    <button onclick='bubble()'>冒泡</button>
+  </body>
+  <script>
+    const ranArr = genArr(1000, 10000)
+      console.log('The random array:', ranArr)
+
+      function genArr (len = 10, max = 100, min = 1) {
+        const arr = new Array(0)
+        for (let i = 0; i < len; i++) {
+          let k
+          const num = Math.round(Math.random() * max + min)
+          for (k = 0; k < arr.length; k++) {
+            if (arr[k] === num) break
+          }
+          if (k === arr.length) {
+            arr.push(num)
+            continue
+          }
+          i--
+        }
+        
+        return arr
+      }
+
+      function insert () {
+        const arr = new Array(...ranArr)
+        const len = arr.length
+        let temp
+        console.time('Insert sort')
+        for (let i = 1; i < len; i++) {
+          // 第一个元素默认已经排序，从第二个元素开始，取出一个临时元素
+          temp = arr[i]
+          for (let k = i; k >= 0; k--) {
+            if (arr[k - 1] > temp) {
+              // 已排序的元素比临时元素大，则已排序元素往后退一格
+              arr[k] = arr[k - 1]
+              continue
+            } else {
+              // 否则临时元素往后退一格并结束比较
+              arr[k] = temp
+              break
+            }
+          }
+        }
+        console.timeEnd('Insert sort')
+        console.log('The insert sort result is: ', arr)
+      }
+
+      function choice () {
+        const arr = new Array(...ranArr)
+        const len = ranArr.length
+        let temp
+        console.time('Choice sort')
+        for (let i = 0; i < len; i++) {
+          // 设当前元素为最小元素
+          let min = arr[i]
+          let minIndex = i
+          for (let k = i + 1; k < len; k++) {
+            // 用最小元素和剩余的元素比较，找到其中最小的
+            if (min > arr[k]) {
+              min = arr[k]
+              minIndex = k
+            }
+          }
+          // 将最小元素填上
+          arr[minIndex] = arr[i]
+          arr[i] = min
+        }
+        console.timeEnd('Choice sort')
+        console.log('The Choice sort result is: ', arr)
+      }
+
+      function choice2 () {
+        const arr = new Array(...ranArr)
+        const len = ranArr.length
+        console.time('Choice2 sort')
+        for (let i = 0; i < len; i++) {
+          for (let k = i + 1; k < len; k++) {
+            if (arr[i] > arr[k]) {
+              [arr[i], arr[k]] = [arr[k], arr[i]]
+            }
+          }
+        }
+        console.timeEnd('Choice2 sort')
+        console.log('The Choice2 sort result is: ', arr)
+      }
+
+      function bubble () {
+        const arr = new Array(...ranArr)
+        const len = ranArr.length
+        console.time('Bubble sort')
+        for (let i = 0; i < len; i++) {
+          for (let k = 0; k < len - i; k++) {
+            if (arr[k] > arr[k + 1]) {
+              [arr[k], arr[k + 1]] = [arr[k + 1], arr[k]]
+              continue
+            }
+          }
+        }
+        console.timeEnd('Bubble sort')
+        console.log('The Bubble sort result is: ', arr)
+      }
+
+      function merge () {
+        const arr = new Array(...ranArr)
+        const len = ranArr.length
+      }
+  </script>
+</html>
