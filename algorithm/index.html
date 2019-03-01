@@ -11,9 +11,13 @@
     <button onclick='choice()'>选择</button>
     <button onclick='choice2()'>选择2</button>
     <button onclick='bubble()'>冒泡</button>
+    <button onclick='merge()'>归并</button>
+    <button onclick='quick()'>快速</button>
+    <button onclick='quickOpt()'>快速优化</button>
+    <button onclick='quickOpt(true)'>快速优化 - swap</button>
   </body>
   <script>
-    const ranArr = genArr(1000, 10000)
+    const ranArr = genArr(10000, 1000000000)
       console.log('The random array:', ranArr)
 
       function genArr (len = 10, max = 100, min = 1) {
@@ -37,6 +41,7 @@
       function insert () {
         const arr = new Array(...ranArr)
         const len = arr.length
+        if (len <= 1) return arr
         let temp
         console.time('Insert sort')
         for (let i = 1; i < len; i++) {
@@ -61,6 +66,7 @@
       function choice () {
         const arr = new Array(...ranArr)
         const len = ranArr.length
+        if (len <= 1) return arr
         let temp
         console.time('Choice sort')
         for (let i = 0; i < len; i++) {
@@ -85,6 +91,7 @@
       function choice2 () {
         const arr = new Array(...ranArr)
         const len = ranArr.length
+        if (len <= 1) return arr
         console.time('Choice2 sort')
         for (let i = 0; i < len; i++) {
           for (let k = i + 1; k < len; k++) {
@@ -100,6 +107,7 @@
       function bubble () {
         const arr = new Array(...ranArr)
         const len = ranArr.length
+        if (len <= 1) return arr
         console.time('Bubble sort')
         for (let i = 0; i < len; i++) {
           for (let k = 0; k < len - i; k++) {
@@ -114,8 +122,101 @@
       }
 
       function merge () {
+        let arr = new Array(...ranArr)
+        const len = ranArr.length
+        if (len <= 1) return arr
+        console.time('Merge sort')
+        arr = split(arr)
+        console.timeEnd('Merge sort')
+        console.log('The Merge sort result is: ', arr)
+
+        function split (array) {
+          if (array.length <= 1) return array
+          const mid = Math.round(array.length / 2)
+          const left = array.slice(0, mid)
+          const right = array.slice(mid)
+
+          return sort(split(left), split(right))
+        }
+
+        function sort (left, right) {
+          const temp = new Array(0)
+          while (left.length && right.length) {
+            if (left[0] < right[0]) {
+              temp.push(left.shift())
+            } else {
+              temp.push(right.shift())
+            }
+          }
+          return temp.concat(left, right)
+        }
+      }
+
+      function quick () {
+        let arr = new Array(...ranArr)
+        const len = ranArr.length
+        if (len <= 1) return arr
+
+        console.time('Quick sort')
+        arr = quickSort(arr)
+        console.timeEnd('Quick sort')
+        console.log('The Quick sort result is: ', arr)
+
+        function quickSort (array) {
+          if (array.length <= 1) return array
+          const benchmark = array[Math.round(array.length / 2)]
+          const left = new Array(0)
+          const right = new Array(0)
+          for (let i = 0; i < array.length; i++) {
+            if (array[i] < benchmark) {
+              left.push(array[i])
+            } else if (array[i] > benchmark) {
+              right.push(array[i])
+            }
+          }
+
+          return quickSort(left).concat([benchmark], quickSort(right))
+        }
+      }
+
+      function quickOpt (es6) {
         const arr = new Array(...ranArr)
         const len = ranArr.length
+        if (len <= 1) return arr
+
+        console.time('QuickOpt sort')
+        sort(arr, 0, len - 1)
+        console.timeEnd('QuickOpt sort')
+        console.log('The QuickOpt sort result is: ', arr)
+
+        function swap (arr, left, right) {
+          if (es6) return [arr[left], arr[right]] = [arr[right], arr[left]]
+          const temp = arr[right]
+          arr[right] = arr[left]
+          arr[left] = temp
+        }
+        
+        function partition (array, left, right) {
+          const benchmark = array[right]
+          let pivotIndex = left
+          for (let i = left; i < right; i++) {
+            if (array[i] <= benchmark) {
+              // 比基准值小或相等的，交换到前面的位置，并且基准索引自增
+              swap(array, pivotIndex, i)
+              pivotIndex++
+            }
+          }
+          // 最后将基准值放在基准索引的位置(该位置就是基准值的准确位置)，返回索引
+          swap(array, right, pivotIndex)
+          return pivotIndex
+        }
+
+        function sort (array, left, right) {
+          if (left > right) return
+          const pivotIndex = partition(array, left, right)
+          sort(array, left, pivotIndex - 1)
+          sort(array, pivotIndex + 1, right)
+        }
       }
   </script>
 </html>
