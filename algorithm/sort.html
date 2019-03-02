@@ -15,9 +15,12 @@
     <button onclick='quick()'>快速</button>
     <button onclick='quickOpt()'>快速优化</button>
     <button onclick='quickOpt(true)'>快速优化 - swap</button>
+    <button onclick='maxVal()'>最大差值</button>
+    <button onclick='addMax()'>最大和值</button>
+    <button onclick='divideMax()'>最大和值 - 分治</button>
   </body>
   <script>
-    const ranArr = genArr(10000, 1000000000)
+    const ranArr = genArr(1000, 2000000)
       console.log('The random array:', ranArr)
 
       function genArr (len = 10, max = 100, min = 1) {
@@ -26,10 +29,11 @@
           let k
           const num = Math.round(Math.random() * max + min)
           for (k = 0; k < arr.length; k++) {
-            if (arr[k] === num) break
+            if (Math.abs(arr[k]) === num) break
           }
           if (k === arr.length) {
-            arr.push(num)
+            const res = num % 2 === 0 ? num : -num
+            arr.push(res)
             continue
           }
           i--
@@ -216,6 +220,81 @@
           const pivotIndex = partition(array, left, right)
           sort(array, left, pivotIndex - 1)
           sort(array, pivotIndex + 1, right)
+        }
+      }
+
+      function maxVal () {
+        let min = ranArr[0]
+        let maxProfit = 0
+        console.time('maxVal')
+        for (let i = 0; i < ranArr.length; i++) {
+          min = Math.min(min, ranArr[i])
+          const potent = ranArr[i] - min
+          maxProfit = Math.max(maxProfit, potent)
+        }
+        console.timeEnd('maxVal')
+        console.log('The maxVal is: ', maxProfit)
+      }
+
+      function addMax () {
+        // 先设最大值为一个最小值，js的最小值不是MIN_VALUE，其为最小正整数
+        let maxVal = -Number.MAX_VALUE
+        let sum = 0
+        console.time('addMax')
+        for (let i = 0; i < ranArr.length; i++) {
+          // 如果之前累积的和小于0，那么就没有必要继续累积，因为无论如何接下去累积的和都会比自身小
+          if (sum < 0) sum = 0
+          sum = ranArr[i] + sum
+          // 最大值和自身以及和值比较，取最大
+          // 因为初始值为最小值，因此会保存第一个值
+          // 如果和值比当前最大值小，但又不小于0，证明还是有机会超过当前最大值，因此不会归零，但是最大值不变
+          maxVal = Math.max(maxVal, sum)
+        }
+        console.timeEnd('addMax')
+        console.log('The addMax is: ', maxVal)
+      }
+
+      function divideMax () {
+        const arr = new Array(...ranArr)
+        const len = ranArr.length
+
+        console.time('divideMax')
+        const maxVal = divide(arr, 0, len - 1)
+        console.timeEnd('divideMax')
+        console.log('The divideMax is: ', maxVal)
+
+        function divide (array, left, right) {
+          // 只剩一个，则返回
+          if (left === right) return array[left]
+
+          // 左右相连，取最大
+          if (left === right - 1) return Math.max(array[left], Math.max(array[right], array[left] + array[right]))
+
+          // 取中间的索引
+          const midIndex = Math.round((left + right) / 2)
+          // 左右边递归，直到还剩两个以下返回最大值
+          const leftMax = divide(array, left, midIndex - 1)
+          const rightMax = divide(array, midIndex + 1, right)
+
+          // 中间最大值
+          let midMax = array[midIndex]
+          let sum = midMax
+          // 遍历左侧，寻得连续的最大值
+          for(let i = midIndex - 1; i >= left; i--) {
+            sum += array[i]
+            midMax = Math.max(midMax, sum)
+          }
+
+          sum = midMax
+          // 将左侧连续最大值赋值给sum, 遍历右侧, 寻得连续的最大值
+          // 最终得到中间的这个数连续的最大值
+          for (let i = midIndex + 1; i <= right; i++) {
+            sum += array[i]
+            midMax = Math.max(midMax, sum)
+          }
+
+          // 比较左侧、中间、右侧的最大连续值，取最大
+          return Math.max(leftMax, Math.max(rightMax, midMax))
         }
       }
   </script>

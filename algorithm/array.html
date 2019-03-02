@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Array Removel Duplicate</title>
+  </head>
+  <body>
+    <button onclick='duplicateR1()'>双重For</button>
+    <button onclick='duplicateR2()'>indexOf</button>
+    <button onclick='duplicateR3()'>Filter</button>
+    <button onclick='duplicateR4()'>Set</button>
+  </body>
+  <script>
+    const arr = [11,2,23,44,6,8,4,12,23,22,48,23,5,6,7,11]
+      console.log('The array:', arr)
+
+
+      function duplicateR1 () {
+        const tempArr = new Array(0)
+        for (let i = 0; i < arr.length; i++) {
+          let k
+          for (k = 0; k < tempArr.length; k++) {
+            if (arr[i] === tempArr[k]) break
+          }
+          if (k !== tempArr.length) continue
+
+          tempArr.push(arr[i])
+        }
+
+        console.log('couple for-loop removel duplicate result is:', tempArr)
+      }
+
+      function duplicateR2 () {
+        const tempArr = new Array(0)
+        for (let i = 0; i < arr.length; i++) {
+          if (!~tempArr.indexOf(arr[i])) tempArr.push(arr[i])
+        }
+
+        console.log('for + indexOf removel duplicate result is:', tempArr)
+      }
+      
+      function duplicateR3 () {
+        const tempArr = arr.filter((v, k, array) => array.indexOf(v) === k)
+
+        console.log('filter + indexOf removel duplicate result is:', tempArr)
+      }
+
+      function duplicateR4 () {
+        const tempArr = Array.from(new Set(arr))
+
+        console.log('Set + Array.from removel duplicate result is:', tempArr)
+      }
+  </script>
+</html>
