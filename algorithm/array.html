@@ -52,5 +52,33 @@
 
         console.log('Set + Array.from removel duplicate result is:', tempArr)
       }
+
+      function step (n) {
+        if (n <= 2) return n
+        var one = 1
+        var two = 2
+        var steps = 0
+        for (let i = 3;i <= n; i++) {
+          steps = one + two
+          one = two
+          two = steps
+        }
+        return steps
+      }
+
+      function step1 (n) {
+        if (n <= 2) return n
+        return step1(n - 1) + step1(n - 2)
+      }
+
+      function step2 (n, total = 0) {
+        if (n <= 2) return n
+        const n1 = step2(n - 1)
+        const n2 = step2(n - 2)
+        return stepSum(n1, n2)
+      }
+      function stepSum (n1, n2) {
+        return n1 + n2
+      }
   </script>
 </html>
