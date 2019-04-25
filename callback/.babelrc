@@ -1,0 +1,19 @@
+{
+  "presets": [
+    ["env", {
+      "modules": false,
+      "debug": true,
+      "useBuiltIns": true,
+      "include": [],
+      "exclude": [],
+      "targets": {
+        "browsers": ["> 1%", "last 2 versions", "not ie <= 8","safari >= 7"],
+        "node": "current"
+      }
+    }],
+    "stage-2"
+  ],
+  "plugins": [
+    ["transform-runtime"]
+  ]
+}

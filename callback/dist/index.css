@@ -1,0 +1,28 @@
+
+h2{color:red
+}
+#app{text-align:center;color:#2c3e50;margin-top:8vw;content:"viewport-units-buggyfill; margin-top: 8vw"
+}
+h1,h2{font-weight:400
+}
+ul{list-style-type:none;padding:0
+}
+li{text-align:left;margin:0 1.3333333333vw;content:"viewport-units-buggyfill; margin: 0 1.3333333333vw"
+}
+a{color:#42b983
+}
+img{width:66.6666666667vw;content:"viewport-units-buggyfill; width: 66.6666666667vw"
+}
+.ball-wrap{position:relative;width:100vw;height:66.6666666667vw;background:#add8e6;content:"viewport-units-buggyfill; width: 100vw; height: 66.6666666667vw"
+}
+.ball{position:absolute;width:13.3333333333vw;height:13.3333333333vw;border-radius:50%;background:indigo;color:#f0fff0;line-height:13.3333333333vw;content:"viewport-units-buggyfill; width: 13.3333333333vw; height: 13.3333333333vw; line-height: 13.3333333333vw"
+}
+.ball:nth-of-type(2){top:20vw;content:"viewport-units-buggyfill; top: 20vw"
+}
+.ball:nth-of-type(3){top:40vw;content:"viewport-units-buggyfill; top: 40vw"
+}
+.ball-wrap{position:relative;width:100vw;height:66.6666666667vw;background:#add8e6;content:"viewport-units-buggyfill; width: 100vw; height: 66.6666666667vw"
+}
+.ball{position:absolute;width:13.3333333333vw;height:13.3333333333vw;border-radius:50%;background:indigo;color:#f0fff0;line-height:13.3333333333vw;content:"viewport-units-buggyfill; width: 13.3333333333vw; height: 13.3333333333vw; line-height: 13.3333333333vw"
+}body {
+  margin: 0; }
