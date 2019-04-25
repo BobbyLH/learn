@@ -1,0 +1,9 @@
+node_modules/
+npm-debug.log*
+.next/
+.vscode/
+package-lock.json
+out/
+.idea/
+.DS_Store
+v8-compile-cache-0/

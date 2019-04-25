@@ -1,0 +1,16 @@
+.nav{
+  height: 100px;
+  background: lightgray;
+  &-list{
+    overflow: hidden;
+    text-align: center;
+    width: 100%;
+    height: 100%;
+    line-height: 100px;
+    padding: 0 10%;
+    &-item{
+      float: left;
+      width: 20%;
+    }
+  }
+}
