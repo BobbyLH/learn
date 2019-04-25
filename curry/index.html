@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+  </head>
+  <body>
+    
+  </body>
+  <script>
+    function add () {
+      var _arg = Array.prototype.slice.call(arguments)
+      var adder = function () {
+        var _adder = function () {
+          Array.prototype.push.apply(_arg, Array.prototype.slice.call(arguments))
+          return _adder
+        }
+          _adder.toString = function () {
+            return _arg.reduce(function (a, b) {
+                return a + b
+            })
+          }
+            return _adder
+        }
+      return adder.apply(null, Array.prototype.slice.call(arguments))
+    }
+  </script>
+</html>
