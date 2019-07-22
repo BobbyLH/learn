@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>RegExp</title>
+  </head>
+  <body>
+    正则分组 - (非)捕获型分组、正反向前瞻、反向引用
+  </body>
+  <script>
+    function logger (reg, str) {
+      console.log(reg.toString(), `- ${str}: `, reg.test(str))
+    }
+
+    // 捕获型分组 反向引用
+    var reg1 = /(\w{3}) is \1$/
+    var str1 = 'kid is kid'
+
+    // 捕获型分组 反向引用{2}
+    var reg2 = /(\w{3}) is \1{2}/
+    var str2 = 'kid is kidkid'
+
+    // 非捕获型分组
+    var reg3 = /(?:\d{4})-(\d{2})-(\d{2})/
+    var str3 = '2019-06-09'
+
+    logger(reg1, str1)
+    logger(reg1, str2)
+    logger(reg2, str1)
+    logger(reg2, str2)
+    logger(reg3, str3)
+    console.log('RegExp.$1', RegExp.$1)
+    console.log('RegExp.$2', RegExp.$2)
+
+    // 正向前瞻性分组
+    var reg4 = /kid is a (?=doubi)/
+    var str4_1 = 'kid is a doubi'
+    var str4_2 = 'kid is a shabi'
+    logger(reg4, str4_1)
+    logger(reg4, str4_2)
+    console.log('RegExp.$1', RegExp.$1)
+
+    // 反向前瞻性分组
+    var reg5 = /kid is a (?!doubi)/
+    var str5_1 = 'kid is a doubi'
+    var str5_2 = 'kid is a shabi'
+    logger(reg5, str5_1)
+    logger(reg5, str5_2)
+    console.log('RegExp.$1', RegExp.$1)
+
+    // 前瞻和非捕获在分组中的区别
+    var reg6 = /(kid is a (?:doubi))/
+    var reg7 = /(kid is a (?=doubi))/
+    var str6_1 = 'kid is a doubi'
+    logger(reg6, str6_1)
+    console.log('RegExp.$1', RegExp.$1)
+    console.log(str6_1.match(reg6))
+    logger(reg7, str6_1)
+    console.log('RegExp.$1', RegExp.$1)
+    console.log(str6_1.match(reg7))
+
+    // 贪婪和非贪婪匹配
+    var reg8 = /!.+!/
+    var reg8_1 = /!.+?!/g
+    var str8 = 'how !dare you! I have !an! apple'
+    console.log(reg8.exec(str8), reg8_1.exec(str8))
+    console.log(str8.match(reg8), str8.match(reg8_1))
+  </script>
+</html>
