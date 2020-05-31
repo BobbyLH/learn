@@ -135,3 +135,10 @@ while True:
         print('It\' not a valid email address, please try again!')
 
 print(f'Your email address is {email}')
+
+bobby = {
+  'career': '前端工程师',
+  'location': '上海',
+  'favor': ['跑步', '游泳', '瑜伽', '读书', '写代码', '吉他'],
+  'label': '长期主义者'
+}
