@@ -1,11 +1,13 @@
-$def with (name)
+$def with (name, form, result)
 
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <meta name="author" content="bobby.li">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hello</title>
+    <link rel="stylesheet" href="/static/css/main.css">
   </head>
   <body>
     <h1>Welcome</h1>
@@ -16,5 +18,17 @@ $def with (name)
       $else:
         world!
     </span>
+    <p>Let's start <a href="https://github.com/BobbyLH/template-extract-plugin">learning</a></p>
+
+    <hr>
+
+    <form method="POST">
+      $:form.render()
+    </form>
+
+    <p>
+      Result:
+      <span class='result'>$result</span>
+    </p>
   </body>
 </html>
