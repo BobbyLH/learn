@@ -8,6 +8,8 @@ import (
 	"rsc.io/quote"
 
 	"bobby_learn/greetings"
+
+	"golang.org/x/example/hello/reverse"
 )
 
 func main() {
@@ -22,5 +24,11 @@ func main() {
 		log.Fatal(err)
 	}
 
-	fmt.Println(messages, quote.Go())
+	fmt.Println(
+		messages,
+		reverse.String(quote.Go()),
+		reverse.String("Hello"),
+		reverse.Int(24601),
+	)
 }
+
