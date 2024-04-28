@@ -3,7 +3,9 @@ go 1.22.2
 use (
 	./data-access
 	./example/hello
+	./fmt
 	./generics
 	./hello
+	./solana
 	./web-srv-gin
 )
