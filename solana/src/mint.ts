@@ -21,8 +21,9 @@ async function createToken() {
   const createRes = await createV1(umi, {
     mint,
     authority: signer,
-    name: 'Blow Light High Token',
-    symbol: 'BLH',
+    name: 'LayerZero',
+    symbol: '$ZEO',
+    decimals: 6,
     uri: '',
     sellerFeeBasisPoints: percentAmount(0),
     creators: [{
@@ -38,7 +39,7 @@ async function createToken() {
   const mintRes = await mintV1(umi, {
     mint: mint.publicKey,
     authority: signer,
-    amount: 1000000,
+    amount: 1000000000000,
     tokenOwner: signer.publicKey,
     tokenStandard: TokenStandard.NonFungible,
   }).sendAndConfirm(umi)
