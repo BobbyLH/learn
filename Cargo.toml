@@ -1,5 +1,7 @@
 [workspace]
 
-members = [
+members = [ 
+    "rust/date_types", "rust/enums",
     "rust/guessing_game",
+    "rust/ownership", "rust/structure",
 ]
