@@ -1,7 +1,7 @@
 [workspace]
 
 members = [ "rust/collection", 
-    "rust/date_types", "rust/enums",
-    "rust/guessing_game", "rust/modules",
-    "rust/ownership", "rust/restaurant", "rust/structure",
+    "rust/date_types", "rust/enums", "rust/error",
+    "rust/guessing_game", "rust/lifttimes", "rust/modules",
+    "rust/ownership", "rust/restaurant", "rust/structure", "rust/traits",
 ]
