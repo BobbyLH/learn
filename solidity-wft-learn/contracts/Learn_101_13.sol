@@ -2,6 +2,10 @@
 pragma solidity ~0.8.26;
 
 contract Grandfather {
+    uint256 public x = 5;
+    uint256 internal y = 10;
+    uint256 private z = 20;
+
     event Log(string msg);
 
     function hip() public virtual {
@@ -14,6 +18,14 @@ contract Grandfather {
 
     function grandfather() public virtual {
         emit Log("Grandfather");
+    }
+
+    function setX(uint256 _x) public {
+        x = _x;
+    }
+
+    function getZ() public view returns (uint256) {
+        return z;
     }
 }
 
@@ -32,6 +44,15 @@ contract Father is Grandfather {
 
     function callParent() public {
         Grandfather.pop();
+    }
+
+    function changeState(uint256 _x, uint256 _y) public {
+        x = _x;
+        y = _y;
+    }
+
+    function readState() public view returns(uint256, uint256) {
+        return (x, y);
     }
 }
 

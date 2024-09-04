@@ -4,7 +4,21 @@
 	},
 	"language": "Solidity",
 	"output": {
-		"abi": [],
+		"abi": [
+			{
+				"inputs": [],
+				"name": "a",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			}
+		],
 		"devdoc": {
 			"kind": "dev",
 			"methods": {},
@@ -18,7 +32,7 @@
 	},
 	"settings": {
 		"compilationTarget": {
-			"contracts/Learn_102_23.sol": "A"
+			"contracts/Learn_101_13.sol": "A"
 		},
 		"evmVersion": "cancun",
 		"libraries": {},
@@ -32,12 +46,12 @@
 		"remappings": []
 	},
 	"sources": {
-		"contracts/Learn_102_23.sol": {
-			"keccak256": "0x754bf586db7952329053a1de86b6e2bad47ab05993f3b234a6437edc4a8eb0b2",
+		"contracts/Learn_101_13.sol": {
+			"keccak256": "0xe6016513c187d8fcd5956479d4117ff7ab097b81a4b54fbaf9b58f8410f398dc",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://7592e9a031dd4f56f059be95e989b4409259ad07cfc72a4fc02ff87be4b58aed",
-				"dweb:/ipfs/QmXnMLD1VQCJueewMhaibNTjkgRnUSjG9fvaomEVHrT3r4"
+				"bzz-raw://d37a3a284af8d3990b0caff2485ac3269abdc2758ce8aea7d6a9731f91713b61",
+				"dweb:/ipfs/QmQtzNjZYGTUnqsCfjqRsSCAQdpYPxpo7VQUDuYg4QkJX8"
 			]
 		}
 	},
